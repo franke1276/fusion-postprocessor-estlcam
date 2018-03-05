@@ -1,6 +1,6 @@
 /*
 
-Custom Post-Processor for estlcam
+estlCAM Post-Processor for Fusion 360
 Using Exiting Post Processors as inspiration
 For documentation, see GitHub Wiki : https://github.com/Strooom/GRBL-Post-Processor/wiki
 
@@ -18,7 +18,6 @@ certificationLevel = 2;
 
 extension = "nc";
 setCodePage("ascii");
-setEOL(CRLF);
 
 capabilities = CAPABILITY_MILLING
 tolerance = spatial(0.005, MM);
