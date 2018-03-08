@@ -9,7 +9,7 @@ For that please make sure, that on a milling operation in Fusion 360
 on the tab "Anfahrt-Wegfahrbewegungen" / "Vertikaler Einfahrradius" is set to 0 mm
 */
 
-description = "Custom Post-Processor for estlcam";
+description = "estlCAM Post-Processor for Fusion 360";
 vendor = "Franke";
 vendorUrl = "";
 model = "";
@@ -135,7 +135,10 @@ function onSection() {
 	var tool = section.getTool();
 
 	if(!isFirstSection()) {
-		writeBlock(mFormat.format(6), "(" + tool.getDescription() + ")");
+		var previousTool = getSection(sectionId - 1).getTool();
+		if (tool.getDescription() != previousTool.getDescription()) {
+			writeBlock(mFormat.format(6), "(" + tool.getDescription() + ")");
+		}
 	}
 
 	writeBlock(mFormat.format(3), sOutput.format(tool.spindleRPM));
