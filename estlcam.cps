@@ -232,14 +232,6 @@ function onCircular(clockwise, cx, cy, cz, x, y, z, feed) {
 			case PLANE_XY:
 				writeBlock(clockwise ? "G02" : "G03", xaOutput.format(x), iOutput.format(cx - start.x), jOutput.format(cy - start.y), feedOutput.format(feed));
 				break;
-			case PLANE_ZX:
-				alert("Error", "No PLANE_ZX,  only XY-PLANE");
-				error("only XY-PLANE");
-				break;
-			case PLANE_YZ:
-				alert("Error", "No PLANE_YZ, only XY-PLANE");
-				error("only XY-PLANE");
-				break;
 			default:
 				linearize(tolerance);
 			}
@@ -247,14 +239,6 @@ function onCircular(clockwise, cx, cy, cz, x, y, z, feed) {
 		switch (getCircularPlane())	{
 			case PLANE_XY:
 				writeBlock(clockwise ? "G02" : "G03", xaOutput.format(x), yaOutput.format(y), zaOutput.format(z), iOutput.format(cx - start.x), jOutput.format(cy - start.y), feedOutput.format(feed));
-				break;
-			case PLANE_ZX:
-				alert("Error", "No PLANE ZX, only XY-PLANE");
-				error("only XY-PLANE");
-				break;
-			case PLANE_YZ:
-				alert("Error", "No PLANE YZ, only XY-PLANE");
-				error("only XY-PLANE");
 				break;
 			default:
 				linearize(tolerance);
