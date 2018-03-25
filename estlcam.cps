@@ -20,7 +20,7 @@ extension = "nc";
 setCodePage("ascii");
 
 capabilities = CAPABILITY_MILLING
-tolerance = spatial(0.005, MM);
+tolerance = spatial(0.01, MM);
 minimumChordLength = spatial(0.01, MM);
 minimumCircularRadius = spatial(0.01, MM);
 maximumCircularRadius = spatial(1000, MM);
@@ -222,28 +222,21 @@ function onLinear5D(_x, _y, _z, _a, _b, _c, feed) {
 
 function onCircular(clockwise, cx, cy, cz, x, y, z, feed) {
 	var start = getCurrentPosition();
-	if (isFullCircle())	{
-		if (isHelical()) {
+	
+	
+	if (isHelical()) {
+		linearize(tolerance);
+		return;
+	}
+	
+	switch (getCircularPlane())	{
+		case PLANE_XY:
+			writeBlock(clockwise ? "G02" : "G03", xaOutput.format(x), yaOutput.format(y), zaOutput.format(z), iOutput.format(cx - start.x), jOutput.format(cy - start.y), feedOutput.format(feed));
+			break;
+		default:
 			linearize(tolerance);
-			return;
-		}
-
-		switch (getCircularPlane())	{
-			case PLANE_XY:
-				writeBlock(clockwise ? "G02" : "G03", xaOutput.format(x), iOutput.format(cx - start.x), jOutput.format(cy - start.y), feedOutput.format(feed));
-				break;
-			default:
-				linearize(tolerance);
-			}
-		} else {
-		switch (getCircularPlane())	{
-			case PLANE_XY:
-				writeBlock(clockwise ? "G02" : "G03", xaOutput.format(x), yaOutput.format(y), zaOutput.format(z), iOutput.format(cx - start.x), jOutput.format(cy - start.y), feedOutput.format(feed));
-				break;
-			default:
-				linearize(tolerance);
-			}
-		}
+	}
+	
 }
 
 function onSectionEnd() {
